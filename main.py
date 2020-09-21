@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def simpleModel(torque, wob):
     # Constants
     diameterInches = 4 # Typical width of flat bit per https://www.ditchwitch.com/sites/default/files/HDD-Tooling-Catalog.pdf
-    MSE = 350 # psi - need to verify whether this is a viable number
+    MSE = 350 # psi - NEED TO GET AN ACCURATE NUMBER FOR THIS (USE TEALE'S USING EXPECTED VALUES)
     bit_area = math.pi * ((diameterInches / 2) ** 2) # A = pi*r^2
     g = 9.81 # Gravity
 
@@ -23,35 +23,35 @@ def simpleModel(torque, wob):
     return ROP
 
 # Preallocate arrays for graphs
-torque_array_wob50 = np.array([])
-wob_array_t50 = np.array([])
-torque_array_wob100 = np.array([])
-wob_array_t100 = np.array([])
-torque_array_wob150 = np.array([])
-wob_array_t150 = np.array([])
-torque_array_wob200 = np.array([])
-wob_array_t200 = np.array([])
+torque_array_wob500 = np.array([])
+wob_array_t500 = np.array([])
+torque_array_wob1000 = np.array([])
+wob_array_t1000 = np.array([])
+torque_array_wob1500 = np.array([])
+wob_array_t1500 = np.array([])
+torque_array_wob2000 = np.array([])
+wob_array_t2000 = np.array([])
 range_array = np.array([])
 
 # Fill each array by running the model at specific intervals of Torque and WOB
-for i in range(0,250):
-    torque_array_wob50 = np.append(torque_array_wob50, simpleModel(i, 50))
-    wob_array_t50 = np.append(wob_array_t50, simpleModel(50, i))
-    torque_array_wob100 = np.append(torque_array_wob100, simpleModel(i, 100))
-    wob_array_t100 = np.append(wob_array_t100, simpleModel(100, i))
-    torque_array_wob150 = np.append(torque_array_wob150, simpleModel(i, 150))
-    wob_array_t150 = np.append(wob_array_t150, simpleModel(150, i))
-    torque_array_wob200 = np.append(torque_array_wob200, simpleModel(i, 200))
-    wob_array_t200 = np.append(wob_array_t200, simpleModel(200, i))
+for i in range(0,4000):
+    torque_array_wob500 = np.append(torque_array_wob500, simpleModel(i, 500))
+    wob_array_t500 = np.append(wob_array_t500, simpleModel(500, i))
+    torque_array_wob1000 = np.append(torque_array_wob1000, simpleModel(i, 1000))
+    wob_array_t1000 = np.append(wob_array_t1000, simpleModel(1000, i))
+    torque_array_wob1500 = np.append(torque_array_wob1500, simpleModel(i, 1500))
+    wob_array_t1500 = np.append(wob_array_t1500, simpleModel(1500, i))
+    torque_array_wob2000 = np.append(torque_array_wob2000, simpleModel(i, 2000))
+    wob_array_t2000 = np.append(wob_array_t2000, simpleModel(2000, i))
 
     range_array = np.append(range_array, i)
 
 
 # TORQUE PLOT - plot deltaTorque based on fixed WOB values
-plt.plot(range_array, torque_array_wob50, label ="WOB = 50 lbs")
-plt.plot(range_array, torque_array_wob100, label ="WOB = 100 lbs")
-plt.plot(range_array, torque_array_wob150, label ="WOB = 150 lbs")
-plt.plot(range_array, torque_array_wob200, label ="WOB = 200 lbs")
+plt.plot(range_array, torque_array_wob500, label ="Thrust = 500 lbs")
+plt.plot(range_array, torque_array_wob1000, label ="Thrust = 1000 lbs")
+plt.plot(range_array, torque_array_wob1500, label ="Thrust = 1500 lbs")
+plt.plot(range_array, torque_array_wob2000, label ="Thrust = 2000 lbs")
 plt.legend()
 plt.title(r"$\Delta$Torque vs ROP (fixed WOB)")
 plt.xlabel('Torque (ft lbs)')
@@ -59,10 +59,10 @@ plt.ylabel('ROP (in/min)')
 plt.show()
 
 # WOB Plot - plot deltaWOB based on fixed Torque values
-plt.plot(range_array, wob_array_t50, label ="T = 50 ft-lbs")
-plt.plot(range_array, wob_array_t100, label ="T = 100 ft-lbs")
-plt.plot(range_array, wob_array_t150, label ="T = 150 ft-lbs")
-plt.plot(range_array, wob_array_t200, label ="T = 200 ft-lbs")
+plt.plot(range_array, wob_array_t500, label ="T = 500 ft-lbs")
+plt.plot(range_array, wob_array_t1000, label ="T = 1000 ft-lbs")
+plt.plot(range_array, wob_array_t1500, label ="T = 1500 ft-lbs")
+plt.plot(range_array, wob_array_t2000, label ="T = 2000 ft-lbs")
 plt.legend(loc = 'upper right')
 plt.title(r"$\Delta$WOB vs ROP (fixed Torque)")
 plt.xlabel('WOB (lbs)')
