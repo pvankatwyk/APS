@@ -1,18 +1,27 @@
 # Model based on Hamid's analysis on slide 34 of "Automation of HDD Performance Optimization" Slides
 
-# RPM = 0.1*(30/pi)*sqrt(((2*g)/Do)*((MuS*tanTheta+1)/MuW))
-# Power = RPM * (2pi/60) * Torque
-# Torque = 85000 * RPM^-2.3 + 1800
-
 import math
+import pandas as pd
 
 def hamidModel(diameter, helix_angle, uSurface, uWall):
-    g = 9.81 # Gravity
+    g = 9.8
+    RPM_1 = (30 / math.pi) * math.sqrt(0.1 * g * ((math.tan(20 * (math.pi / 180)) + uSurface) / (diameter * uWall)))
+    RPM_2 = (30 / math.pi) * math.sqrt(0.1 * g * ((math.tan(20 * (math.pi / 180)) * uSurface +1) / (diameter * uWall)))
+    Torque = 85000 * (RPM_1 ** -2.3) + 1800
+    Power = RPM_2 * (math.pi / 30) * Torque
 
-    RPM = (30 / math.pi) * math.sqrt(((2 * g * (math.tan(helix_angle * (math.pi / 180)) + uSurface)) / (diameter * uWall)))
-    Torque = 85000 * (RPM**-2.7) + 1800
-    Power = RPM * ((2*math.pi)/60)*Torque
-    out = 'RPM: ' + str(round(RPM,2)) + ', Torque: ' + str(round(Torque,2)) + ', Power: ' + str(round(Power,2))
-    return print(out)
+    list_out = []
+    for output in (diameter, helix_angle, uSurface, uWall, RPM_1, RPM_2, Power, Torque):
+        list_out.append(output)
 
-hamidModel(0.8,20,.2,.5)
+    return (list_out)
+
+Results_DF = pd.DataFrame(columns = ["Diameter", "Helix Angle", "uSurface", "uWall", "RPM_1", "RPM_2", "Torque", "Power"])
+
+for diameter in (0.08, 0.16):
+    for helix_angle in (20,25):
+        for uSurface in (0.2,0.3):
+            for uWall in (0.5,0.6,0.7,0.8):
+                Results_DF.loc[len(Results_DF)] = hamidModel(diameter,helix_angle,uSurface,uWall)
+
+print(Results_DF)
