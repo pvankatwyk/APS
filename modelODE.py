@@ -4,7 +4,7 @@ from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
 def modelTorque(y,t):
-    RPM = 100 # Value calculated in main.py
+    RPM = 100 # Value calculated in ZTModel.py
     MSE = 350
     W = 100
     diameterInches = 4
