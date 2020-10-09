@@ -2,8 +2,8 @@
 # This model:
 #   1. Creates a synthetic dataset based on upper and lower boundaries of thrust, rpm, torque, bit diameter, friction
 #   2. Runs the ZT Model (Zacny, Teale) and calculates ROP
-#   3. Preforms basic model selection, predicting the friction coef. based on thrust, rpm, torque, bit diameter, and ROP
-#   4. Runs an Extra Trees Regressor model
+#   3. Preforms basic model selection, predicting the soil type based on thrust, rpm, torque, bit diameter, and ROP
+#   4. Runs an X model
 #   5. Calculates mean absolute error as a form of validation
 
 import numpy as np
