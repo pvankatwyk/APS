@@ -1,4 +1,10 @@
-# Create a Machine Learning model based on generated data from existing physics-based models
+# Regressor ML Model
+# This model:
+#   1. Creates a synthetic dataset based on upper and lower boundaries of thrust, rpm, torque, bit diameter, friction
+#   2. Runs the ZT Model (Zacny, Teale) and calculates ROP
+#   3. Preforms basic model selection, predicting the friction coef. based on thrust, rpm, torque, bit diameter, and ROP
+#   4. Runs an Extra Trees Regressor model
+#   5. Calculates mean absolute error as a form of validation
 
 import numpy as np
 import pandas as pd
@@ -123,48 +129,6 @@ for i,x in enumerate(m):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # gsc = GridSearchCV(
 #     estimator=etr,
 #     param_grid={
@@ -181,6 +145,6 @@ for i,x in enumerate(m):
 # gsc.fit(train_X, train_Y)
 
 
-
+# TODO: Pick Classification Model and Cross Validate?
 
 print('Done')

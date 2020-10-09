@@ -1,4 +1,11 @@
-# Create a Machine Learning model based on generated data from existing physics-based models
+# Regressor ML Model
+# This model:
+#   1. Creates a synthetic dataset based on upper and lower boundaries of thrust, rpm, torque, bit diameter, friction
+#   2. Runs the ZT Model (Zacny, Teale) and calculates ROP
+#   3. Preforms basic model selection, predicting the friction coef. based on thrust, rpm, torque, bit diameter, and ROP
+#   4. Runs an Extra Trees Regressor model
+#   5. Calculates mean absolute error as a form of validation
+
 
 import numpy as np
 import pandas as pd
@@ -82,6 +89,7 @@ train_X, test_X, train_Y, test_Y = train_test_split(X, y, train_size=0.7,shuffle
 # out = "Support Vector MAE: " + str(svr_mae) + ', Time: ' + str(finish_svr) + ' seconds.'
 # print(out)
 
+# EXTRA TREES MODEL
 start_etr = time.time()
 etr = ExtraTreesRegressor(n_estimators = 125)
 etr.fit(train_X, train_Y)
@@ -99,7 +107,7 @@ results_DF['Test_Y'] = test_Y
 # results_DF['SVR Diff'] = svr_test_predictions
 results_DF['ExtraTrees_Diff Diff'] = etr_test_predictions
 
-
+# PARAMETER OPTIMIZATION_________________________________________________________
 # for estimator in [50,60,70,80,90,100,125,150,175,200]:
 #     start = time.time()
 #     etr = ExtraTreesRegressor(random_state = 1, n_estimators=estimator)
@@ -124,11 +132,6 @@ results_DF['ExtraTrees_Diff Diff'] = etr_test_predictions
 #     verbose=1
 # )
 # gsc.fit(train_X, train_Y)
-
-
-# Make the friction coefficient not a nice number, then assign it to one of the soil types, then put in the original
-# dataframe what kind of soil that is, then use classifiers instead of regressors
-# OR -- classify them later, so use regressors but use the prediction to then put them into bins
 
 
 
