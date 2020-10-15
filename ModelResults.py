@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from ZTModel import ZTModel
 from PFModel import PFModel
-from BYModel import BYModel
 
 # ZT Model --------------------------------------------------------
 
@@ -20,17 +19,18 @@ thrust_array_t2000 = np.array([])
 range_array = np.array([])
 bit_diameter = 4
 friction = 0.6
+RPM = 0 # Set to zero so that the minimum RPM from Zacny is used
 
 # Fill each array by running the model at specific intervals of Torque and thrust
 for i in range(0,4000):
-    torque_array_thrust500 = np.append(torque_array_thrust500, ZTModel(i, 500, bit_diameter, friction))
-    thrust_array_t500 = np.append(thrust_array_t500, ZTModel(500, i, bit_diameter, friction))
-    torque_array_thrust1000 = np.append(torque_array_thrust1000, ZTModel(i, 1000, bit_diameter, friction))
-    thrust_array_t1000 = np.append(thrust_array_t1000, ZTModel(1000, i, bit_diameter, friction))
-    torque_array_thrust1500 = np.append(torque_array_thrust1500, ZTModel(i, 1500, bit_diameter, friction))
-    thrust_array_t1500 = np.append(thrust_array_t1500, ZTModel(1500, i, bit_diameter, friction))
-    torque_array_thrust2000 = np.append(torque_array_thrust2000, ZTModel(i, 2000, bit_diameter, friction))
-    thrust_array_t2000 = np.append(thrust_array_t2000, ZTModel(2000, i, bit_diameter, friction))
+    torque_array_thrust500 = np.append(torque_array_thrust500, ZTModel(i, 500, bit_diameter, friction, RPM))
+    thrust_array_t500 = np.append(thrust_array_t500, ZTModel(500, i, bit_diameter, friction, RPM))
+    torque_array_thrust1000 = np.append(torque_array_thrust1000, ZTModel(i, 1000, bit_diameter, friction, RPM))
+    thrust_array_t1000 = np.append(thrust_array_t1000, ZTModel(1000, i, bit_diameter, friction, RPM))
+    torque_array_thrust1500 = np.append(torque_array_thrust1500, ZTModel(i, 1500, bit_diameter, friction, RPM))
+    thrust_array_t1500 = np.append(thrust_array_t1500, ZTModel(1500, i, bit_diameter, friction, RPM))
+    torque_array_thrust2000 = np.append(torque_array_thrust2000, ZTModel(i, 2000, bit_diameter, friction, RPM))
+    thrust_array_t2000 = np.append(thrust_array_t2000, ZTModel(2000, i, bit_diameter, friction, RPM))
 
     range_array = np.append(range_array, i)
 
