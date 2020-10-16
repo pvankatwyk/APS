@@ -47,7 +47,7 @@ acc_list_classifier = []
 for dataset_length in length_list:
     dataset = makeDataset(dataset_length, RPM_lower, RPM_upper, torque_lower, torque_upper, thrust_lower, thrust_upper,
                           bit_lower, bit_upper, friction_lower, friction_upper)
-    X = dataset[['thrust', 'torque', 'RPM', 'bit_diameter', 'ZTModel_ROP']]
+    X = dataset[['thrust', 'torque', 'RPM', 'bit_diameter', 'ZT_ROP']]
     y = dataset.classification
     train_X, test_X, train_Y, test_Y = train_test_split(X, y, train_size=0.7, shuffle=False, random_state=1)
     start = time.time()
@@ -67,7 +67,7 @@ acc_list_regressor = []
 for dataset_length in length_list:
     dataset = makeDataset(dataset_length, RPM_lower, RPM_upper, torque_lower, torque_upper, thrust_lower, thrust_upper,
                           bit_lower, bit_upper, friction_lower, friction_upper)
-    X = dataset[['thrust', 'torque', 'RPM', 'bit_diameter', 'ZTModel_ROP']]
+    X = dataset[['thrust', 'torque', 'RPM', 'bit_diameter', 'ZT_ROP']]
     y = dataset.friction_coeff
     train_X, test_X, train_Y, test_Y = train_test_split(X, y, train_size=0.7, shuffle=False, random_state=1)
     start_etr = time.time()
@@ -101,4 +101,3 @@ axs[1].set_xlabel('Size of Synthetic Dataset')
 axs[1].set_ylabel('Time to fit (seconds)')
 
 plt.show()
-

@@ -17,7 +17,7 @@ def ZTModel(torque, thrust, bit_diameter, friction):
 
     # Constants
     #bit_diameter = 4 # Typical width of flat bit per https://www.ditchwitch.com/sites/default/files/HDD-Tooling-Catalog.pdf
-    MSE = 1000 # psi - NEED TO GET AN ACCURATE NUMBER FOR THIS (USE TEALE'S USING EXPECTED VALUES)
+    MSE = 2000 # psi - NEED TO GET AN ACCURATE NUMBER FOR THIS (USE TEALE'S USING EXPECTED VALUES)
     bit_area = math.pi * ((bit_diameter / 2) ** 2) # A = pi*r^2
     g = 9.81 # Gravity
 

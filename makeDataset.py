@@ -29,9 +29,9 @@ def makeDataset(dataset_length, RPM_lower, RPM_upper, torque_lower, torque_upper
 
     dataset['classification'] = dataset['friction_coeff'].apply(lambda x: soilClassifier(x))
 
-    dataset['ROP'] = dataset.apply(lambda x: ZTModel(x.torque, x.thrust, x.bit_diameter, x.friction_coeff),
-                                          axis=1)
-    # dataset['ROP'] = dataset.apply(lambda x: PFModel(x.RPM, x.thrust, x.bit_diameter, x.friction_coeff), axis=1)
+    dataset['ZT_ROP'] = dataset.apply(lambda x: ZTModel(x.torque, x.thrust, x.bit_diameter, x.friction_coeff),
+                                         axis=1)
+    dataset['PF_ROP'] = dataset.apply(lambda x: PFModel(x.RPM, x.thrust, x.bit_diameter, x.friction_coeff), axis=1)
     return dataset
 
 # soilClassifier:
@@ -55,5 +55,3 @@ def soilClassifier(x):
     elif x > 0.8:
         out = 'Fine to Course Gravel'
     return out
-
-

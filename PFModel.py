@@ -9,11 +9,12 @@ import math
 # Disadvantages: Doesn't rely on Zacny, 2007 auger RPM equation, but also doesn't have variable torque input because it
 # is directly related to WOB and RPM. Also doesn't account for as many parameters as BYM.
 
+# Inputs: (Float or Integer) - RPM, Thrust (lbf), Bit Diameter (in), and Friction Coefficients (unitless)
+# Output: (Float) - ROP (ft/hr)
+
 def PFModel(RPM, thrust, bit_diameter, friction):
     # Constants
-    MSE = 1000 # Energy needed to remove 1 volume unit of soil (NEED TO VERIFY WITH DATA)
-    #bit_diameter = 4 # Typical width of flat bit per https://www.ditchwitch.com/sites/default/files/HDD-Tooling-Catalog.pdf
-    #Mu = 0.6 # Coefficient of sliding friction
+    MSE = 2000 # Energy needed to remove 1 volume unit of soil (NEED TO VERIFY WITH DATA)
     Mu = friction
     borehole_area = math.pi * (bit_diameter / 2) ** 2 # Borehole area
 
@@ -21,7 +22,7 @@ def PFModel(RPM, thrust, bit_diameter, friction):
     # torque = Mu*bit_diameter*WOB / 36 -- substitute that into Teale's equation:
     #ROP = (13.33*borehole_area*RPM*Mu)/(bit_diameter*(MSE*borehole_area-wob))
 
-    # Belayneh (2019) - Accounts for rotation friction
+    # Belayneh (2019) - Accounts for rotational friction
     inside_sqrt = 1 + ((16 * (Mu**2) * (thrust ** 2)) / (9 * (MSE * borehole_area - thrust) ** 2))
     ROP = ((5 * math.sqrt(2) * math.pi * bit_diameter * RPM) / (2)) * (math.sqrt(math.sqrt(inside_sqrt) - 1))
     return ROP
