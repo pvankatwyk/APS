@@ -148,6 +148,7 @@ results_DF['ExtraTrees'] = etr_test_predictions
 #     verbose=1
 # )
 # gsc.fit(train_X, train_Y)
+# print(gsc.best_estimator_)
 
 # Classify the new
 results_DF['classification_pred'] = results_DF['ExtraTrees'].apply(lambda x: soilClassifier(x))

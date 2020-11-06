@@ -35,8 +35,8 @@ friction_upper = 0.9
 
 # CLASSIFIER
 # Establish a list for all the different dataset_lengths to test
-length_list = [100,250,500,1000,2500, 5000, 7500, 10000, 15000, 20000, 30000, 40000, 50000, 75000, 100000]
-# length_list = [100,200,300, 1000]
+# length_list = [100,250,500,1000,2500, 5000, 7500, 10000, 15000, 20000, 30000, 40000, 50000, 75000, 100000]
+length_list = [100,200,300, 1000]
 time_list_PF = []
 acc_list_PF = []
 acc_list_class_PF = []
