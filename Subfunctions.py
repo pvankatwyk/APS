@@ -44,7 +44,7 @@ def PrepareData(folder, profiling):
         data['Time'] = data['TimeStamp']                        # Time last
         del data['TimeStamp']                                   # remove TimeStamp
         del data['index']                                       # remove index
-        data['Location'] = str(f)                               # Create Location Column with file name
+        #data['Location'] = str(f)                               # Create Location Column with file name
         dataframes.append(data)
 
     # combined = np.vstack(dataframes)
@@ -58,7 +58,7 @@ def PrepareData(folder, profiling):
     # MSE Calculation + Plot -------------------------------------------------
     bit_diameter = 4.0
     Area = math.pi*(bit_diameter/2.0)**2.0
-    data['MSE'] = (data['Thrust Force Max (lbf)']/Area)+((2*math.pi*data['Rotation Speed Max (rpm)']*data['Rotation Torque Max (ft-lb)'])/(Area*data['ROP (ft/hr)']))
+    #data['MSE'] = (data['Thrust Force Max (lbf)']/Area)+((2*math.pi*data['Rotation Speed Max (rpm)']*data['Rotation Torque Max (ft-lb)'])/(Area*data['ROP (ft/hr)']))
 
     # If you want a profile report..
     if profiling:
@@ -165,7 +165,7 @@ def ModelAnalyzer(X,y, regressor = True):
 
         out = out_dt + '\n' + out_rf + '\n' + out_svr + '\n' + out_etr + '\n' + out_lasso + '\n' + out_ridge + '\n' + out_en
 
-    else :
+    else:
         # Run several models and determine prediction accuracy using accuracy score.
 
         # Logistic Regression
@@ -262,6 +262,14 @@ def ParamOptimize(parameters, model, train_X, train_Y):
     #   - train_Y: (Vector) Training target
     # OUTPUTS:
     #   - gsc.best_estimator: (str) Prints optimized parameters
+
+    # parameters = {
+    #     'n_estimators': range(25,200,1)
+    #     #'min_samples_leaf': [1, 2, 3],
+    #     #'min_samples_split': [2,3,4]
+    # }
+
+
     from sklearn.model_selection import GridSearchCV
     gsc = GridSearchCV(
         estimator=model,
@@ -272,4 +280,4 @@ def ParamOptimize(parameters, model, train_X, train_Y):
         verbose=1
     )
     gsc.fit(train_X, train_Y)
-    return print(gsc.best_estimator_)
+    return print(gsc.best_params_)

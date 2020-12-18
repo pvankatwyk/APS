@@ -53,6 +53,8 @@ y = dataset.classification # Label
 train_X, test_X, train_Y, test_Y = train_test_split(X, y, train_size=0.7,shuffle=False, random_state=1)
 
 
+from Subfunctions import ModelAnalyzer
+ModelAnalyzer(X,y, False)
 # Run several models and determine prediction accuracy using accuracy score.
 
 # Logistic Regression

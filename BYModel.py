@@ -3,14 +3,14 @@ def BYModel():
     import math
     # Model Coefficients
     # Comments - Suggested ranges for constants by Bourgoyne and Young
-    a1 = 3.91 # 0.5 < a1 < 1.9 - Formation Strength
-    a2 = 0.0000945 # 0.000001 < a2 < 0.0005 - Normal Compaction
-    a3 = 0.0000686 # 0.000001 < a3 < 0.0009 - Under Compaction
-    a4 = 0.0000864 # 0.000001 < a4 < 0.0001 - Pressure Differential
-    a5 = 0.37 # 0.5 < a5 < 2 - Weight on bit
-    a6 = 2.23 # 0.5 < a6 < 1 - Rotary Speed
-    a7 = 0.025 # 0.3 < a7 < 1.5 - Tooth Wear
-    a8 = 0.67 # 0.3 < a8 < 0.6 - Jet Impact Force
+    a1 = -107.774 # 0.5 < a1 < 1.9 - Formation Strength
+    a2 = 0.009772 # 0.000001 < a2 < 0.0005 - Normal Compaction
+    a3 = -0.3486 # 0.000001 < a3 < 0.0009 - Under Compaction
+    a4 = 0.000376 # 0.000001 < a4 < 0.0001 - Pressure Differential
+    a5 = 0.992084 # 0.5 < a5 < 2 - Weight on bit
+    a6 = 1.144862 # 0.5 < a6 < 1 - Rotary Speed
+    a7 = -4.86087 # 0.3 < a7 < 1.5 - Tooth Wear
+    a8 = -0.45384 # 0.3 < a8 < 0.6 - Jet Impact Force
 
     # Papers that may be of use to determining coefficients --
         # Determination of constant coefficients of Bourgoyne and Young drilling
@@ -21,15 +21,15 @@ def BYModel():
         # ROP Modeling for Volcanic Geothermal Drilling Optimization
 
     # Model Constants
-    depth = 2150 # True vertical depth (feet)
-    pore_pressure = 8.365 # Pore pressure gradient (lb(m)/gallon)
-    WOB = .82 # Weight on bit (1000 lb(f))
-    diameter = 4 # Bit diameter (in)
-    threshold_weight = 1000 # "threshold bit weight per inch of bit diameter"
-    RPM = 120 # Rotations per Minute
-    tooth_wear = -0.5 # Fractional bit tooth wear
-    Fj = 0.882 # # Jet Impact Force (lb(f))
-    mud_density = 8.93 # Equivalent mud density (lb(m)/gal)
+    depth = 4849 # True vertical depth (feet)
+    pore_pressure = 8.5 # Pore pressure gradient (lb(m)/gallon)
+    WOB = 1.55 # Weight on bit (1000 lb(f))
+    diameter = 12 # Bit diameter (in)
+    threshold_weight = 10 # "threshold bit weight per inch of bit diameter"
+    RPM = 110 # Rotations per Minute
+    tooth_wear = -0.25 # Fractional bit tooth wear
+    Fj = 0.673 # # Jet Impact Force (lb(f))
+    mud_density = 8.79 # Equivalent mud density (lb(m)/gal)
 
     # ROP Factors
     f1 = math.exp(2.303*a1)

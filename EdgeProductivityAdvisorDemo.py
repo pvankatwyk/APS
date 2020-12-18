@@ -73,7 +73,7 @@ Area = math.pi*(bit_diameter/2.0)**2.0
 df_full['MSE'] = (df_full['Thrust Force Max (lbf)']/Area)+((2*math.pi*df_full['Rotation Speed Max (rpm)']*df_full['Rotation Torque Max (ft-lb)'])/(Area*df_full['ROP (ft/hr)']))
 
 # Save df_full to a csv to import to MATLAB (for Curve Fitting App)
-# df_full.to_csv(r'C:\Users\Peter\Downloads\ROPvMSE.csv')
+# df_full.to_csv(r'C:\Users\Peter\Downloads\BYData.csv')
 
 # Create profiling report (couldn't get it to work)
 # from pandas_profiling import ProfileReport
@@ -114,7 +114,12 @@ df_full['MSE'] = (df_full['Thrust Force Max (lbf)']/Area)+((2*math.pi*df_full['R
 #
 #     plt.savefig(path)
 #     plt.show()
-
+df_mlr = df_full.loc[df_full['Date']=='10/21/2020']
+# df_mlr = df_mlr.drop(columns = ['TimeStamp', 'Rod Count', 'Mud Flow Rate Avg (gpm)', 'Mud Pressure Max (psi)',
+#                                 'Thrust Speed Avg (ft/min)', 'Pull Force Maximum (lbf)', 'Pull Speed Average (ft/min)',
+#                                 'Date', 'Time', 'deltaTime', 'deltaLength', 'ROP (ft/min)', 'MSE'])
+df_mlr= df_mlr[['Drill String Length (ft)', 'Thrust Force Max (lbf)', 'Rotation Speed Max (rpm)', 'ROP (ft/hr)']]
+df_mlr.to_csv(r'C:\Users\Peter\Downloads\BYData.csv', header = False, index = False)
 
 # Physics based model validation ------------------------------------------
 bit_diameter = 6
@@ -126,10 +131,14 @@ df_full['PFModel'] = df_full.apply(lambda x: PFModel(x['Rotation Speed Max (rpm)
                                                      bit_diameter, friction_coeff), axis=1)
 df_full['diff'] = df_full['ROP (ft/hr)']-df_full['PFModel']
 df_full.reset_index()
-# plt.plot(df_full.index, df_full.PFModel, 'r')
-# plt.plot(df_full.index, df_full['ROP (ft/hr)'], 'k')
-#plt.plot(df_full.index, df_full.MSE-2000)
-#plt.show()
+plt.plot(df_full.index, df_full.PFModel, 'r', label = 'Calculated ROP (PFModel)')
+plt.plot(df_full.index, df_full['ROP (ft/hr)'], 'k', label = 'Observed ROP (Edge)')
+plt.title('PFModel ROP vs Edge ROP')
+plt.xlabel('Data Point in Edge Dataset')
+plt.ylabel('ROP (ft/min)')
+plt.legend(loc = 'best')
+# plt.plot(df_full.index, df_full.MSE-2000)
+plt.show()
 
 # mse = sum(df_full['diff'])/len(df_full)
 from sklearn.metrics import mean_absolute_error
