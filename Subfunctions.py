@@ -13,6 +13,8 @@ def PrepareData(folder, profiling):
     import seaborn as sns
     import math
     from glob import glob
+    import warnings
+    warnings.filterwarnings('ignore')
     sns.set_theme()
 
     # Import data
@@ -38,6 +40,7 @@ def PrepareData(folder, profiling):
             y[i] = True if data['Rod Count'][i]>data['Rod Count'][i-1] else False
         x[0] = np.mean(x[1:3]) # average of 2 and 3 for 1st time point only
         data['ROP (ft/min)'] = np.array(y)*60.0*10.0/x
+        data['deltaTime'] = x
         data['Drill'] = y
         data = data[data['Drill']]                              # Remove all but forward drill
         #data = data[data['ROP (ft/min)']<4]                    # Keep data with ROP < 4
@@ -56,8 +59,8 @@ def PrepareData(folder, profiling):
     data['ROP (ft/hr)'] = data['ROP (ft/min)'] * 60
 
     # MSE Calculation + Plot -------------------------------------------------
-    bit_diameter = 4.0
-    Area = math.pi*(bit_diameter/2.0)**2.0
+    #bit_diameter = 4.0
+    #Area = math.pi*(bit_diameter/2.0)**2.0
     #data['MSE'] = (data['Thrust Force Max (lbf)']/Area)+((2*math.pi*data['Rotation Speed Max (rpm)']*data['Rotation Torque Max (ft-lb)'])/(Area*data['ROP (ft/hr)']))
 
     # If you want a profile report..

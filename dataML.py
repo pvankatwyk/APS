@@ -75,8 +75,10 @@ finish_etr = str(round(time.time() - start_etr, 5))
 
 # Median Dataset Plots
 maximum_params = [] # List to store values for maximizing ROP
+prediction_list = []
 for column in X.columns:
-    delta_column = range(int(min(X[column])), int(max(X[column]))) # Create array for the variable being changed
+    #delta_column = range(int(min(X[column])), int(max(X[column])))
+    delta_column = np.linspace(int(min(X[column])), int(max(X[column])), 100000)# Create array for the variable being changed
     df = pd.DataFrame(delta_column)
     # Create columns for all variables with the median values
     df['Rotation Speed Max (rpm)'] = np.median(X['Rotation Speed Max (rpm)'])
@@ -105,13 +107,26 @@ for column in X.columns:
     plt.ylabel('ROP (ft/min)')
     title = column + ' vs ROP'
     plt.title(title)
-    plt.show()
+    #plt.show()
     # Append value that produces the maximum ROP prediction value
     maximum_params.append(df[column][prediction.argmax()])
+    prediction_list.append([column, prediction])
+    # output csv
+    out = pd.DataFrame(delta_column)
+    out['prediction'] = prediction
+    out.columns = ['x', 'prediction']
+    column_fp = column.replace("/","")
+    path = r'C:/Users/Peter/Downloads/' + str(column_fp) + '.csv'
+    out.to_csv(path, index = False)
+
 
 # Use all of the maximum values to predict the maximum ROP
 maximum_params = np.array(maximum_params)
 maximum_rop = etr.predict(maximum_params.reshape(1,-1))
 # maximum_rop = 10 ft/min (which is the maximum ROP value in the dataset)
+file = r'C:/Users/Peter/Downloads/CleanData.html'
+from pandas_profiling import ProfileReport
+prof = ProfileReport(data)
+prof.to_file(output_file=file)
 
 print('Done')
